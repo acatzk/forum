@@ -1,3 +1,7 @@
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
+import { hasuraAdminClient } from './../../lib/hasura-admin-client'
+
 export default async (req, res) => {
   const { email, password } = req.body
 

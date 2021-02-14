@@ -25,8 +25,8 @@ export default function Home() {
             </button>
             <button onClick={() => {
               register({
-                name: 'James Bond',
-                email: 'jamesbond@gmail.com',
+                name: 'Jerwin Gilo',
+                email: 'jerwin@gmail.com',
                 password: 'asdfa'
               })
             }}>
