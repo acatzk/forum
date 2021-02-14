@@ -1,23 +1,56 @@
 import { createContext, useReducer, useContext } from 'react'
 
 const initialState = {
-  isAuthenticated: false
+  isAuthenticated: false,
+  user: null,
+  token: null
 }
 
 const AuthDispatchContext = createContext()
 const AuthStateContext = createContext()
 
+const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+const LOGOUT = "LOGOUT"
+
 function reducer (state, { payload, type }) {
   switch(type) {
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: true
+      }
+    case LOGOUT:
+      return initialState
     default:
       throw new Error(`Unhandled action type ${type}`)
   }
 }
 
+
 function AuthProvider ({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  const login = async ({ email, password }) => {
+    const token = 'abc123'
+    const user = {
+      name: 'Joshua Galit'
+    }
+    dispatch({ type: LOGIN_SUCCESS, payload: {token, user } })
+  }
+
+  const createUser = async ({ name, email, password }) => {
+    const token = 'abc123'
+    const user = {
+      name: 'Joshua Galit'
+    }
+    dispatch({ type: LOGIN_SUCCESS, payload: { token, user } })
+  }
+
+  const logout = () => dispatch({ type: LOGOUT })
+
   return (
-    <AuthDispatchContext.Provider value={undefined}>
+    <AuthDispatchContext.Provider value={{ login, createUser, logout }}>
       <AuthStateContext.Provider value={state}>
         { children }
       </AuthStateContext.Provider>
