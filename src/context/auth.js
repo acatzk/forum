@@ -32,25 +32,45 @@ function AuthProvider ({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const login = async ({ email, password }) => {
-    const token = 'abc123'
-    const user = {
-      name: 'Joshua Galit'
-    }
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const json = await res.json()
+    
+    if (!res.ok) throw new Error(json?.message)
+
+    const { token, ...user } = json
+
     dispatch({ type: LOGIN_SUCCESS, payload: {token, user } })
   }
 
-  const createUser = async ({ name, email, password }) => {
-    const token = 'abc123'
-    const user = {
-      name: 'Joshua Galit'
-    }
+  const register = async ({ name, email, password }) => {
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    const json = await res.json()
+    
+    if (!res.ok) throw new Error(json?.message)
+
+    const { token, ...user } = json
+
     dispatch({ type: LOGIN_SUCCESS, payload: { token, user } })
   }
 
   const logout = () => dispatch({ type: LOGOUT })
 
   return (
-    <AuthDispatchContext.Provider value={{ login, createUser, logout }}>
+    <AuthDispatchContext.Provider value={{ login, register, logout }}>
       <AuthStateContext.Provider value={state}>
         { children }
       </AuthStateContext.Provider>
