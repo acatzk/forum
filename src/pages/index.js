@@ -1,15 +1,8 @@
 import Head from 'next/head'
+import { useAuthState } from './../context/auth'
 
 export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Forum</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-700">Hello world</h1>
-      </div>
-    </>
-  )
+  const { isAuthenticated } = useAuthState()
+  
+  return isAuthenticated ? 'Hello User' : 'Hello Guest'
 }
