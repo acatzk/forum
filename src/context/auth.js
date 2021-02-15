@@ -1,4 +1,5 @@
-import { createContext, useReducer, useContext } from 'react'
+import { createContext, useReducer, useContext, useEffect } from 'react'
+import createPersistedState from 'use-persisted-state'
 
 const initialState = {
   isAuthenticated: false,
@@ -8,6 +9,7 @@ const initialState = {
 
 const AuthDispatchContext = createContext()
 const AuthStateContext = createContext()
+const usePersistedAuthState = createPersistedState('forum-auth')
 
 const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 const LOGOUT = "LOGOUT"
@@ -29,7 +31,14 @@ function reducer (state, { payload, type }) {
 
 
 function AuthProvider ({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [savedAuthState, saveAuthState] = usePersistedAuthState(
+    JSON.stringify(initialState)
+  )
+  const [state, dispatch] = useReducer(reducer, JSON.parse(savedAuthState))
+
+  useEffect(() => {
+    saveAuthState(JSON.stringify(state))
+  }, [state, saveAuthState]);
 
   const login = async ({ email, password }) => {
     const res = await fetch('/api/login', {

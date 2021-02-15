@@ -1,25 +1,8 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { hasuraAdminClient } from './../../lib/hasura-admin-client'
-import { gql } from 'graphql-request'
-
-const GET_USER_BY_EMAIL_QUERY = gql`
-  query GetUserByEmail($email: String) {
-    users(where: {email: {_eq: $email}}) {
-      id
-    }
-  }
-`
-
-const ADD_USER_MUTATION = gql`
-  mutation AddUserMutation($name: String!, $email: String!, $password: String!) {
-    insert_users_one(object: {name: $name, email: $email, password: $password}) {
-      id
-      email
-      name
-    }
-  }
-`
+import { hasuraAdminClient } from '~/lib/hasura-admin-client'
+import { ADD_USER_MUTATION } from '~/graphql/mutations'
+import { GET_USER_BY_EMAIL_QUERY } from '~/graphql/queries'
 
 export default async (req, res) => {
   const { name, email, password: rawPassword } = req.body
