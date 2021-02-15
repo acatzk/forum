@@ -2,12 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/components/*": ["src/components/*"],
-      "~/context/*": ["src/context/*"],
-      "~/graphql/*": ["src/graphql/*"],
-      "~/lib/*": ["src/lib/*"],
-      "~/pages/*": ["src/pages/*"],
-      "~/styles/*": ["src/styles/*"]
+      "~/*": ["src/*"]
     }
   }
 } 
