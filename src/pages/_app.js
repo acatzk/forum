@@ -1,7 +1,7 @@
 import '~/styles/tailwind.css'
 import { AuthProvider } from '~/context/auth'
 
-function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Component {...pageProps} />
@@ -9,4 +9,4 @@ function App({ Component, pageProps }) {
   )
 }
 
-export default App
+export default MyApp
