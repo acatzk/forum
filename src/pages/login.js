@@ -85,7 +85,7 @@ export default function LoginPage() {
               </div>
               <div className="flex items-center justify-start">
                 <button disabled={ isSubmitting }
-                        className={ `${ isSubmitting ? 'opacity-50 cursor-not-allowed' : 'opacity-100' } flex justify-center w-24 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`} 
+                        className={ `${ isSubmitting ? 'opacity-50 cursor-not-allowed' : 'opacity-100 hover:bg-white hover:text-indigo-500' } flex justify-center w-24 border border-indigo-600 bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition ease-in-out duration-200`} 
                       type="submit"> 
                   { isSubmitting ? <Loading className='w-5 h-5 text-white' /> : 'Sign In' }
                 </button>
