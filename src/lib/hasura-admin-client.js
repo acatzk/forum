@@ -1,4 +1,4 @@
-import { GraphQLClient, gql } from 'graphql-request'
+import { GraphQLClient } from 'graphql-request'
 
 export const hasuraAdminClient = new GraphQLClient(
   process.env.NEXT_PUBLIC_API_ENDPOINT,
@@ -8,3 +8,5 @@ export const hasuraAdminClient = new GraphQLClient(
     }
   }
 )
+
+export { gql } from 'graphql-request'
