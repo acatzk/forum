@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { useAuthDispatch, useAuthState } from '~/context/auth'
 import Layout from '~/components/Layout'
+import Spinner from '~/components/Spinner'
 
 /**
 * 1. Login form for name, email, password
@@ -11,7 +12,6 @@ import Layout from '~/components/Layout'
 * 3. If there is error, return the error
 * 4. If successful, redirect to the root
 */
-
 export default function RegisterPage() {
 
   const router = useRouter()
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                 <button disabled={ isSubmitting }
                         className={ `${ isSubmitting ? 'opacity-50 cursor-not-allowed' : 'opacity-100 hover:bg-white hover:text-indigo-500' } flex justify-center w-24 border border-indigo-600 bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition ease-in-out duration-200`} 
                       type="submit"> 
-                  { isSubmitting ? <Loading className='w-5 h-5 text-white' /> : 'Sign Up' }
+                  { isSubmitting ? <Spinner className='w-5 h-5 text-white' /> : 'Sign Up' }
                 </button>
               </div>
             </form>
@@ -116,36 +116,5 @@ export default function RegisterPage() {
         </div>
       </Layout>
     </>
-  )
-}
-
-
-function Loading({ className }) {
-  return (
-    <svg  className={ `${className}` }
-          viewBox="0 0 38 38" 
-          xmlns="http://www.w3.org/2000/svg" 
-          stroke="currentColor" 
-          color="#000000">
-      <g  transform="translate(1 1)" 
-                strokeWidth="2" 
-                fill="none" 
-                fillRule="evenodd">
-        <circle strokeOpacity=".5" 
-                cx="18" 
-                cy="18" 
-                r="18">
-        </circle>
-        <path d="M36 18c0-9.94-8.06-18-18-18">
-          <animateTransform attributeName="transform" 
-                            type="rotate" 
-                            from="0 18 18" 
-                            to="360 18 18" 
-                            dur="1s" 
-                            repeatCount="indefinite">
-          </animateTransform>
-        </path>
-      </g>
-    </svg>
   )
 }
