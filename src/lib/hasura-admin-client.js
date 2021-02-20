@@ -9,4 +9,4 @@ export const hasuraAdminClient = new GraphQLClient(
   }
 )
 
-export { gql } from 'graphql-request'
+export { gql, request } from 'graphql-request'
