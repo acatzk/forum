@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { hasuraAdminClient } from '~/lib/hasura-admin-client'
-import gql from 'graphql-tag'
+import { hasuraAdminClient, gql } from '~/lib/hasura-admin-client'
 
 const GET_USER_BY_EMAIL_QUERY = gql`
   query GetUserByEmail($email: String) {

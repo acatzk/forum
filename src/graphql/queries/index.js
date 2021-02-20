@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import { gql } from 'graphql-request'
 
 export const GET_USER_BY_EMAIL_QUERY = gql`
   query GetUserByEmail($email: String) {
@@ -6,6 +6,15 @@ export const GET_USER_BY_EMAIL_QUERY = gql`
       id
       name
       email
+    }
+  }
+`
+
+export const GET_CATEGORY_QUERY = gql`
+  query GetCategory {
+    categories {
+      id
+      name
     }
   }
 `

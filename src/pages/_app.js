@@ -1,11 +1,11 @@
 import '~/styles/tailwind.css'
-import { AuthProvider } from '~/context/auth'
+import Layout from '~/layouts/default'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, children }) {
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <Layout Component={ Component } pageProps={ pageProps }>
+      { children }
+    </Layout>
   )
 }
 
