@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import { gql } from 'graphql-request'
 
 export const ADD_USER_MUTATION = gql`
   mutation AddUserMutation($name: String!, $email: String!, $password: String!) {
@@ -6,6 +6,25 @@ export const ADD_USER_MUTATION = gql`
       id
       email
       name
+    }
+  }
+`
+
+export const ADD_THREAD_MUTATION = gql`
+  mutation InsertThread($category_id: uuid, $title: String, $message: String) {
+    insert_threads_one(object: {category_id: $category_id, title: $title, posts: {data: {message: $message}}}) {
+      id
+      title
+      author {
+        name
+      }
+      category {
+        name
+      }
+      posts {
+        message
+      }
+      created_at
     }
   }
 `
