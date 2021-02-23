@@ -8,6 +8,7 @@ import { GET_CATEGORY_QUERY } from '~/graphql/queries'
 import { ADD_THREAD_MUTATION } from '~/graphql/mutations'
 import { hasuraUserClient } from '~/lib/hasura-user-client'
 import Spinner from '~/components/Spinner'
+import { toast, ToastContainer } from 'react-nextjs-toast'
 
 /** 
  * Static Generation
@@ -55,15 +56,21 @@ export default function AskPage({ categories }) {
    */
   const onSubmit = async ({ categoryId, title, message }) => {
     try {
+
       const { insert_threads_one } = await hasuraUserClient.request(ADD_THREAD_MUTATION, {
         category_id: categoryId,
         title,
         message
       })
-      console.log(insert_threads_one)
+
+      toast.notify(`Successfully Added.`, {
+        title: 'Success',
+        type: 'success',
+        duration: 5
+      })
       
     } catch (err) {
-      console.log(err)
+      console.log(`Error: ${err}`)
     }
   }
   
@@ -72,6 +79,8 @@ export default function AskPage({ categories }) {
       <Head>
         <title>Ask A Question | Forum</title>
       </Head>
+      {/** Toast component **/}
+      <ToastContainer align={"center"} position={"bottom"} className="z-50"/>
       <div className="mt-10 w-full bg-white m-auto px-9 py-10 rounded-none sm:rounded-lg shadow">
         <p className="text-2xl text-indigo-600 text-center">Ask anything question</p>
         <form onSubmit={ handleSubmit(onSubmit) } className="space-y-3">
