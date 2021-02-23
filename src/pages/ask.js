@@ -31,6 +31,7 @@ export default function AskPage({ categories }) {
    */
   const router = useRouter()
   const { isAuthenticated } = useAuthState()
+  const hasura = hasuraUserClient()
 
   /**
    * Init useForm from react-hook-form
@@ -57,7 +58,7 @@ export default function AskPage({ categories }) {
   const onSubmit = async ({ categoryId, title, message }) => {
     try {
 
-      const { insert_threads_one } = await hasuraUserClient.request(ADD_THREAD_MUTATION, {
+      const { insert_threads_one } = await hasura.request(ADD_THREAD_MUTATION, {
         category_id: categoryId,
         title,
         message
@@ -68,6 +69,8 @@ export default function AskPage({ categories }) {
         type: 'success',
         duration: 5
       })
+
+      router.push(`/threads/${insert_threads_one.id}`)
       
     } catch (err) {
       console.log(`Error: ${err}`)
