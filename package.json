@@ -21,6 +21,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "^6.15.1",
+    "react-nextjs-toast": "^1.2.5",
     "react-perfect-scrollbar": "^1.5.8",
     "tailwindcss": "^2.0.3",
     "use-persisted-state": "^0.3.3"
