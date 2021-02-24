@@ -70,7 +70,7 @@ export default function AskPage({ categories }) {
         duration: 5
       })
 
-      router.push(`/threads/${insert_threads_one.id}`)
+      router.push(`/thread/${insert_threads_one.id}`)
       
     } catch (err) {
       console.log(`Error: ${err}`)

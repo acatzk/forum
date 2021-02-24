@@ -6,7 +6,7 @@ export default function Header () {
   const { logout } = useAuthDispatch()
 
   return (
-    <header className="bg-white py-2 shadow-sm">
+    <header className="bg-white py-2 shadow">
       <div className="container mx-auto max-w-5xl px-3">
         {
           isAuthenticated ? (

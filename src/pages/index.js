@@ -1,12 +1,34 @@
+import useSWR from 'swr'
 import Head from 'next/head'
+import { hasuraUserClient } from '~/lib/hasura-user-client'
+import { GET_THREADS_QUERY } from '~/graphql/queries'
+import ThreadList from '~/components/ThreadList'
 
-export default function IndexPage() {  
+export const getStaticProps = async () => {
+  const hasura = hasuraUserClient()
+  const initialData = await hasura.request(GET_THREADS_QUERY)
+
+  return {
+    props: {
+      initialData
+    },
+    revalidate: 1
+  }
+}
+
+export default function IndexPage({ initialData }) {  
+  const hasura = hasuraUserClient()
+  const { data, error } = useSWR(GET_THREADS_QUERY, (query) => hasura.request(query), {
+    initialData,
+    revalidateOnMount: true
+  })
+
   return (
     <>
       <Head>
         <title>Forum</title>
       </Head>
-      <p className="text-2xl text-indigo-600">Welcome to the Forum</p>
+      <ThreadList threads={data.threads} />
     </>
   )
 }
