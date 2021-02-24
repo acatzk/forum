@@ -18,3 +18,34 @@ export const GET_CATEGORY_QUERY = gql`
     }
   }
 `
+
+export const GET_THREADS_QUERY = gql`
+  query GetThreadsQuery {
+    threads(order_by: {posts_aggregate: {max: {created_at: desc}}}) {
+      id
+      title
+      author {
+        id
+        name
+      }
+      category {
+        id
+        name
+      }
+      posts(limit: 1, order_by: {created_at: desc}) {
+        id
+        message
+        created_at
+        author {
+          id
+          name
+        }
+      }
+      posts_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+`
