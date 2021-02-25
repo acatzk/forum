@@ -1,18 +1,14 @@
-import PerfectScroll from '~/lib/PerfectScrollbar'
-import { AuthProvider } from '~/context/auth'
-import NProgress from '~/lib/nprogress'
 import Header from '~/components/Header'
 
-export default function Layout ({ Component, pageProps }) {
+export default function Layout ({ children }) {
   return (
-    <AuthProvider>
-      <NProgress />
-      <div className="flex flex-col antialiased text-gray-900 h-screen">
-        <Header />
-        <main className="flex-1 overflow-y-hidden">
-          <PerfectScroll chilren={ <Component { ...pageProps } /> } />
-        </main>
-      </div>
-    </AuthProvider>
+    <div className="flex flex-col antialiased text-gray-900 h-screen">
+      <Header />
+      <main className="flex-1 overflow-y-auto">
+        <div className="container mx-auto max-w-5xl px-3">
+          { children }
+        </div>
+      </main>
+    </div>
   )
 }

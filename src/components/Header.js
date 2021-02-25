@@ -11,12 +11,12 @@ export default function Header () {
         {
           isAuthenticated ? (
             <div className="flex items-center justify-between">
-              <p className="font-medium">
+              <p className="font-medium space-x-2">
                 <Link href="/">
-                  <a>Welcome</a>
+                  <a className="font-medium hover:text-indigo-600 transition ease-in-out duration-200 px-2 py-1 hover:bg-indigo-50 rounded-full focus:bg-indigo-100 focus:text-indigo-600">Home</a>
                 </Link> 
-                <Link href="/">
-                  <a className="text-indigo-600 pl-2 hover:underline">{ user.name }</a>
+                <Link href={ `/profile/${user.id}` }>
+                  <a className="font-medium hover:text-indigo-600 transition ease-in-out duration-200 px-2 py-1 hover:bg-indigo-50 rounded-full focus:bg-indigo-100 focus:text-indigo-600">Profile</a>
                 </Link>
               </p>
               <div className="flex items-center space-x-2">

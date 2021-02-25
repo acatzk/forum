@@ -16,3 +16,5 @@ export const hasuraUserClient = () => {
     }
   )
 }
+
+export { gql } from 'graphql-request'

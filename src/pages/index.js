@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { hasuraUserClient } from '~/lib/hasura-user-client'
 import { GET_THREADS_QUERY } from '~/graphql/queries'
 import ThreadList from '~/components/ThreadList'
+import Layout from '~/layouts/default'
 
 export const getStaticProps = async () => {
   const hasura = hasuraUserClient()
@@ -28,7 +29,9 @@ export default function IndexPage({ initialData }) {
       <Head>
         <title>Forum</title>
       </Head>
-      <ThreadList threads={data.threads} />
+      <Layout>
+        <ThreadList threads={data.threads} />
+      </Layout>
     </>
   )
 }

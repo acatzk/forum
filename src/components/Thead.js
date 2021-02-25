@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import formatRelative from 'date-fns/formatRelative'
 
-const today = new Date()
 export default function Thread ({ id, title, category, posts, posts_aggregate }) {
   const { count } = posts_aggregate.aggregate
   const hasReplies = count > 1
   const [lastPost] = posts
-  const timeago = formatRelative(Date.parse(lastPost.created_at), today, { weekStartsOn: 1 })
+  const timeago = formatRelative(Date.parse(lastPost.created_at), new Date(), { weekStartsOn: 1 })
 
   return (
     <div key={id} className="py-6">
@@ -40,10 +39,10 @@ export default function Thread ({ id, title, category, posts, posts_aggregate })
             <div className="text-sm text-gray-600 pt-1 transition ease-in-out duration-200">
               <Link href={ `/profile/${lastPost.author.id}`}>
                 <a className="font-medium hover:text-indigo-600 hover:underline">
-                  { `${lastPost.author.name} ` }
+                  { `${lastPost.author.name}` }
                 </a>
               </Link>
-              { `${hasReplies ? 'replied ' : 'posted '} in ` } 
+              { `${hasReplies ? ' replied ' : ' posted '} in ` } 
               <span className="font-medium">
                 <Link href={ `/category/${category.id}` }>
                   <a className="hover:text-indigo-600 hover:underline">{`${category.name}`}</a>
