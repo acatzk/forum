@@ -55,6 +55,7 @@ export const GET_THREAD_BY_ID = gql`
     threads_by_pk(id: $id) {
       id
       title
+      locked
       posts {
         id
         message
