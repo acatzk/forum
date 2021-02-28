@@ -5,7 +5,7 @@ export default function Post ({ id, message, created_at, author }) {
   const timeago = formatRelative(Date.parse(created_at), new Date(), { weekStartsOn: 1 })
   
   return (
-    <div key={id} className="flex items-start space-x-2">
+    <div key={id} className="flex items-start space-x-2 py-3">
       <div className="rounded-full border-2 border-gray-500 p-1">
         <svg className="w-5 h-5 fill-current text-gray-600" 
               fill="currentColor" 

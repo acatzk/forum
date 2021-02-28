@@ -6,6 +6,7 @@ import PostList from '~/components/PostList'
 import PostForm from '~/components/PostForm'
 import Layout from '~/layouts/default'
 import { GET_THREAD_BY_ID } from '~/graphql/queries'
+import { ADD_POST_MUTATION } from '~/graphql/mutations'
 
 const GET_THREAD_IDs = gql`
   query {
@@ -47,15 +48,31 @@ export default function ThreadPage ({ initialData }) {
   const router = useRouter()
   const { id } = router.query
 
-  const { data, error } = useSWR(
+  const { data, mutate } = useSWR(
     [GET_THREAD_BY_ID, id], 
     (query, id) => hasura.request(query, { id }), 
     { initialData, revalidateOnMount: true }
   )
 
-  const handlePost = ({ message }) => {
+  const handlePost = async ({ message }) => {
     try {
+      const hasura = hasuraUserClient()
+      const { insert_posts_one } = await hasura.request(ADD_POST_MUTATION, {
+        thread_id: id,
+        message
+      })
 
+      mutate({
+        ...data,
+        threads_by_pk: {
+          ...data.threads_by_pk,
+          posts: [
+            ...data.threads_by_pk.posts,
+            insert_posts_one
+          ]
+        }
+      })
+      
     } catch (err) {
       console.log(err)
     }

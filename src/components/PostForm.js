@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import Spinner from './Spinner'
 
-export default function PostForm () {
+export default function PostForm ({ onSubmit }) {
 
   const {
     handleSubmit,
@@ -9,10 +9,6 @@ export default function PostForm () {
     errors,
     formState: { isSubmitting }
   } = useForm()
-
-  const onSubmit = () => {
-    
-  }
 
   return (
     <div className="py-5 flex space-x-3">
