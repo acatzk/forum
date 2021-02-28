@@ -72,7 +72,7 @@ export default function ThreadPage ({ initialData }) {
           ]
         }
       })
-
+      
     } catch (err) {
       console.log(err)
     }
