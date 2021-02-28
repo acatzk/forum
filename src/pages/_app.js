@@ -1,11 +1,15 @@
 import '~/styles/tailwind.css'
-import Layout from '~/layouts/default'
+import { AuthProvider } from '~/context/auth'
+import NProgress from '~/lib/nprogress'
 
-function MyApp({ Component, pageProps, children }) {
+function MyApp({ Component, pageProps }) {
   return (
-    <Layout Component={ Component } pageProps={ pageProps }>
-      { children }
-    </Layout>
+    <>
+      <NProgress />
+      <AuthProvider>
+        <Component { ...pageProps } />
+      </AuthProvider>
+    </>
   )
 }
 

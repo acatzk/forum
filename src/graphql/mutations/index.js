@@ -28,3 +28,16 @@ export const ADD_THREAD_MUTATION = gql`
     }
   }
 `
+
+export const ADD_POST_MUTATION = gql`
+  mutation AddPostMutation($message: String, $thread_id: uuid) {
+    insert_posts_one(object: {message: $message, thread_id: $thread_id}) {
+      id
+      message
+      created_at
+      author {
+        name
+      }
+    }
+  }
+`

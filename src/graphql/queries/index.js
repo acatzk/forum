@@ -49,3 +49,20 @@ export const GET_THREADS_QUERY = gql`
     }
   }
 `
+
+export const GET_THREAD_BY_ID = gql`
+  query GetThreadById($id: uuid!) {
+    threads_by_pk(id: $id) {
+      id
+      title
+      posts {
+        id
+        message
+        created_at
+        author {
+          name
+        }
+      }
+    }
+  }
+`
