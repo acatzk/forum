@@ -86,7 +86,7 @@ export default function ThreadPage ({ initialData }) {
       <Layout>
         <h1 className="text-2xl font-semibold py-6">{ data.threads_by_pk.title }</h1>
         <PostList posts={data.threads_by_pk.posts} />
-        <PostForm onSubmit={ handlePost }/>
+        { !data.threads_by_pk.locked && <PostForm onSubmit={ handlePost }/> }
       </Layout>
     </>
   )
