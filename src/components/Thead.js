@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import formatRelative from 'date-fns/formatRelative'
 
-export default function Thread ({ id, title, category, posts, posts_aggregate }) {
+export default function Thread ({ id, title, category, posts, posts_aggregate, pinned }) {
   const { count } = posts_aggregate.aggregate
   const hasReplies = count > 1
   const [lastPost] = posts
@@ -24,11 +24,21 @@ export default function Thread ({ id, title, category, posts, posts_aggregate })
           </svg>
         </div>
         <div className="flex flex-col space-y-1">
-          <h3 className="text-xl font-semibold">
-            <Link href={`/thread/${id}`}>
-              <a className="hover:underline hover:text-indigo-600 transition ease-in-out duration-200">{ title }</a>
-            </Link>
-          </h3>
+          <div className="flex items-center space-x-3">
+            {pinned && (
+              <div>
+                <svg className="fill-current w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
+                  <path fill="none" d="M0 0h24v24H0z"/>
+                  <path d="M22.314 10.172l-1.415 1.414-.707-.707-4.242 4.242-.707 3.536-1.415 1.414-4.242-4.243-4.95 4.95-1.414-1.414 4.95-4.95-4.243-4.242 1.414-1.415L8.88 8.05l4.242-4.242-.707-.707 1.414-1.415z"/>
+                </svg>
+              </div>
+            )}
+            <h3 className="text-xl font-semibold">
+              <Link href={`/thread/${id}`}>
+                <a className="hover:underline hover:text-indigo-600 transition ease-in-out duration-200">{ title }</a>
+              </Link>
+            </h3>
+          </div>
           <div className="flex items-center space-x-1.5">
             <svg className="w-5 h-5 fill-current text-gray-600" 
                   fill="currentColor" 
@@ -36,19 +46,25 @@ export default function Thread ({ id, title, category, posts, posts_aggregate })
                   xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path>
             </svg>
-            <div className="text-sm text-gray-600 pt-1 transition ease-in-out duration-200">
+            <div className="flex items-center text-sm text-gray-600 pt-1 transition ease-in-out duration-200">
               <Link href={ `/profile/${lastPost.author.id}`}>
                 <a className="font-medium hover:text-indigo-600 hover:underline">
                   { `${lastPost.author.name}` }
                 </a>
               </Link>
-              { `${hasReplies ? ' replied ' : ' posted '} in ` } 
-              <span className="font-medium">
-                <Link href={ `/category/${category.id}` }>
-                  <a className="hover:text-indigo-600 hover:underline">{`${category.name}`}</a>
-                </Link>
-              </span>
-              <span className="font-medium">{ ` ${timeago}` }</span>
+              <span className="ml-1">{ `${hasReplies ? 'replied ' : 'posted '} ` }</span> 
+              {category && (
+                <div className="ml-1 flex items-center">
+                  <p>in</p>
+                  <span className="font-medium">
+                    <Link href={ `/category/${category.id}` }>
+                      <a className="hover:text-indigo-600 hover:underline ml-1">{`${category.name}`}</a>
+                    </Link>
+                  </span>
+                </div>
+              )
+              }
+              <span className="ml-1 font-medium">{ ` ${timeago}` }</span>
             </div> 
           </div>
         </div>

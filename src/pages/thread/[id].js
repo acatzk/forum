@@ -1,12 +1,13 @@
-import Head from 'next/head'
 import useSWR from 'swr'
+import Head from 'next/head'
+import Layout from '~/layouts/default'
 import { useRouter } from 'next/router'
-import { gql, hasuraUserClient } from '~/lib/hasura-user-client'
 import PostList from '~/components/PostList'
 import PostForm from '~/components/PostForm'
-import Layout from '~/layouts/default'
 import { GET_THREAD_BY_ID } from '~/graphql/queries'
 import { ADD_POST_MUTATION } from '~/graphql/mutations'
+import { useAuthState } from '~/context/auth'
+import { gql, hasuraUserClient } from '~/lib/hasura-user-client'
 
 const GET_THREAD_IDs = gql`
   query {
@@ -47,6 +48,7 @@ export default function ThreadPage ({ initialData }) {
   const hasura = hasuraUserClient()
   const router = useRouter()
   const { id, isFallback } = router.query
+  const { isAuthenticated } = useAuthState()
 
   const { data, mutate } = useSWR(
     [GET_THREAD_BY_ID, id], 
@@ -91,7 +93,7 @@ export default function ThreadPage ({ initialData }) {
       <Layout>
         <h1 className="text-2xl font-semibold py-6">{ data.threads_by_pk.title }</h1>
         <PostList posts={data.threads_by_pk.posts} />
-        { !data.threads_by_pk.locked && <PostForm onSubmit={ handlePost }/> }
+        { !data.threads_by_pk.locked && isAuthenticated && <PostForm onSubmit={ handlePost }/> }
       </Layout>
     </>
   )
