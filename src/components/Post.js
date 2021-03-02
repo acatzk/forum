@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Markdown from 'react-markdown'
 import formatRelative from 'date-fns/formatRelative'
 
 export default function Post ({ id, message, created_at, author }) {
@@ -25,7 +26,7 @@ export default function Post ({ id, message, created_at, author }) {
           <span className="text-xs text-gray-500"> { timeago }</span>
         </div>
         <div className="text-base">
-          { message }
+          <Markdown source={ message }/>
         </div>
       </div>
     </div>
