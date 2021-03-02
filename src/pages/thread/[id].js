@@ -26,7 +26,7 @@ export const getStaticPaths = async () => {
         id
       }
     })),
-    fallback: false
+    fallback: true
   }
 }
 
@@ -46,15 +46,16 @@ export const getStaticProps = async ({ params }) => {
 export default function ThreadPage ({ initialData }) {
   const hasura = hasuraUserClient()
   const router = useRouter()
-  const { id } = router.query
+  const { id, isFallback } = router.query
 
   const { data, mutate } = useSWR(
     [GET_THREAD_BY_ID, id], 
     (query, id) => hasura.request(query, { id }), 
     { initialData, revalidateOnMount: true }
   )
+  if (!isFallback && !data) return <p>No such thread found</p>
 
-  const handlePost = async ({ message }) => {
+  const handlePost = async ({ message }, { target }) => {
     try {
       const hasura = hasuraUserClient()
       const { insert_posts_one } = await hasura.request(ADD_POST_MUTATION, {
@@ -72,11 +73,15 @@ export default function ThreadPage ({ initialData }) {
           ]
         }
       })
-      
+
+      target.reset()
+
     } catch (err) {
       console.log(err)
     }
   }
+
+  if (isFallback) return <Layout>Loading thread...</Layout>
 
   return (
     <>
