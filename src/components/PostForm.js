@@ -1,14 +1,20 @@
-import { useForm } from 'react-hook-form'
 import Spinner from './Spinner'
+import { useState } from 'react'
+import ReactMde from 'react-mde'
+import Markdown from 'react-markdown'
+import { useForm, Controller } from 'react-hook-form'
 
 export default function PostForm ({ onSubmit }) {
 
   const {
-    handleSubmit,
-    register,
     errors,
+    control,
+    register,
+    handleSubmit,
     formState: { isSubmitting }
   } = useForm()
+
+  const [selectedTab, setSelectedTab] = useState('write')
 
   return (
     <div className="py-5 flex space-x-3">
@@ -28,14 +34,23 @@ export default function PostForm ({ onSubmit }) {
       <div className="flex-1">
         <form onSubmit={ handleSubmit(onSubmit) }>
           <div className="flex flex-col">
-            <textarea name="message"
-                      disabled={ isSubmitting }
-                      className={ `mt-0 block w-full px-0.5 border-0 border-b-2 focus:ring-0 ${ errors.message ? 'border-red-200 focus:border-red-500' : 'border-gray-200 focus:border-black' } ${ isSubmitting ? 'opacity-50' : 'opacity-100'}` }
-                      ref={register({
-                        required: 'You must provide a message to reply.'
-                      })}
-                      placeholder="Reply to thread">
-            </textarea>
+              <Controller 
+                disabled={isSubmitting}
+                control={control}
+                name="message"
+                defaultValue=""
+                rules={{
+                  required: 'You must a message to reply.'
+                }}
+                as={
+                  <ReactMde
+                    selectedTab={selectedTab}
+                    onTabChange={setSelectedTab}
+                    generateMarkdownPreview={markdown =>
+                      Promise.resolve(<Markdown source={markdown} />)
+                    }
+                />}
+              />
             { errors.message && <span className="text-xs text-red-500 font-medium pt-0.5">{ errors.message.message }</span> }
           </div>
           <div className="flex items-center justify-end py-2">

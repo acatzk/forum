@@ -1,15 +1,16 @@
 import Head from 'next/head'
-import { useEffect } from 'react'
+import ReactMde from 'react-mde'
+import Markdown from 'react-markdown'
+import Layout from '~/layouts/default'
 import { useRouter } from 'next/router'
-import { useForm } from 'react-hook-form'
+import Spinner from '~/components/Spinner'
+import { useState, useEffect } from 'react'
 import { useAuthState } from '~/context/auth'
-import { hasuraAdminClient } from '~/lib/hasura-admin-client'
+import { useForm, Controller } from 'react-hook-form'
 import { GET_CATEGORY_QUERY } from '~/graphql/queries'
 import { ADD_THREAD_MUTATION } from '~/graphql/mutations'
 import { hasuraUserClient } from '~/lib/hasura-user-client'
-import Spinner from '~/components/Spinner'
-import Layout from '~/layouts/default'
-
+import { hasuraAdminClient } from '~/lib/hasura-admin-client'
 
 /** 
  * Static Generation
@@ -33,14 +34,16 @@ export default function AskPage({ categories }) {
   const router = useRouter()
   const { isAuthenticated } = useAuthState()
   const hasura = hasuraUserClient()
+  const [selectedTab, setSelectedTab] = useState('write')
 
   /**
    * Init useForm from react-hook-form
    */
   const {
-    handleSubmit,
-    register,
     errors,
+    control,
+    register,
+    handleSubmit,
     formState: { isSubmitting }
   } = useForm()
 
@@ -112,13 +115,24 @@ export default function AskPage({ categories }) {
             <div className="flex flex-col">
               <label className="block">
                 <span className="text-gray-700">Message</span>
-                <textarea name="message"
-                          disabled={ isSubmitting }
-                          className={ `mt-0 block w-full px-0.5 border-0 border-b-2 focus:ring-0 ${ errors.title ? 'border-red-200 focus:border-red-500' : 'border-gray-200 focus:border-black' } ${ isSubmitting ? 'opacity-50' : 'opacity-100'}` }
-                          ref={register({
-                            required: 'You must provide a thread message.'
-                          })}>
-                </textarea>
+                <Controller 
+                  disabled={isSubmitting}
+                  control={control}
+                  name="message"
+                  defaultValue=""
+                  rules={{
+                    required: 'You must provide a thread message.'
+                  }}
+                  as={
+                    <ReactMde
+                      selectedTab={selectedTab}
+                      onTabChange={setSelectedTab}
+                      generateMarkdownPreview={markdown =>
+                        Promise.resolve(<Markdown source={markdown} />)
+                      }
+                    />
+                  }
+                />
               </label>
               { errors.message && <span className="text-xs text-red-500 font-medium pt-0.5">{ errors.message.message }</span> }
             </div>
