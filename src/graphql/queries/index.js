@@ -67,3 +67,35 @@ export const GET_THREAD_BY_ID = gql`
     }
   }
 `
+
+export const GET_CATEGORY_BY_ID = gql`
+  query GetCategoryById($id: uuid!) {
+    categories_by_pk(id: $id) {
+      id
+      name
+      threads(order_by: {posts_aggregate: {max: {created_at: desc}}, pinned: desc}) {
+        id
+        title
+        pinned
+        author {
+          id
+          name
+        }
+        posts(limit: 1, order_by: {created_at: desc}) {
+          id
+          message
+          created_at
+          author {
+            id
+            name
+          }
+        }
+        posts_aggregate {
+          aggregate {
+            count
+          }
+        }
+      }
+    }
+  }
+`
