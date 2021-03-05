@@ -14,19 +14,20 @@ export default function Header () {
         {isAuthenticated ? (
             <div className="flex items-center justify-between">
               <div className="font-medium space-x-2">
-                <ActiveLink
-                  href="/"
-                  current="text-indigo-600 bg-indigo-100"
-                >
+                <ActiveLink href="/" current="text-indigo-600 bg-indigo-100">
                   <a href="#" className="font-medium hover:text-indigo-600 transition ease-in-out duration-200 px-2 py-1 hover:bg-indigo-50 rounded-full focus:bg-indigo-100 focus:text-indigo-600">
                     Home
                   </a>
                 </ActiveLink>
                 <ActiveLink href="/today" current="text-indigo-600 bg-indigo-100">
-                  <a className="font-medium hover:text-indigo-600 transition ease-in-out duration-200 px-2 py-1 hover:bg-indigo-50 rounded-full focus:bg-indigo-100 focus:text-indigo-600">Today's Post</a>
+                  <a className="font-medium hover:text-indigo-600 transition ease-in-out duration-200 px-2 py-1 hover:bg-indigo-50 rounded-full focus:bg-indigo-100 focus:text-indigo-600">
+                    Today's Post
+                  </a>
                 </ActiveLink>
-                <ActiveLink href={ `/profile/${user.id}` } current="text-indigo-600 bg-indigo-100">
-                  <a className="font-medium hover:text-indigo-600 transition ease-in-out duration-200 px-2 py-1 hover:bg-indigo-50 rounded-full focus:bg-indigo-100 focus:text-indigo-600">{ user.name }</a>
+                <ActiveLink href="/answered" current="text-indigo-600 bg-indigo-100">
+                  <a className="font-medium hover:text-indigo-600 transition ease-in-out duration-200 px-2 py-1 hover:bg-indigo-50 rounded-full focus:bg-indigo-100 focus:text-indigo-600">
+                    Answered Post
+                  </a>
                 </ActiveLink>
               </div>
               <div className="flex items-center space-x-2">
