@@ -16,6 +16,7 @@ export const ADD_THREAD_MUTATION = gql`
       id
       title
       author {
+        id
         name
       }
       category {
@@ -36,7 +37,17 @@ export const ADD_POST_MUTATION = gql`
       message
       created_at
       author {
+        id
         name
+      }
+      likes {
+        id
+        user_id
+      }
+      likes_aggregate {
+        aggregate {
+          count
+        }
       }
     }
   }
@@ -53,6 +64,14 @@ export const ADD_LIKE_MUTATION = gql`
 export const DELETE_LIKE_MUTATION = gql`
   mutation DeleteLikeMutation($id: uuid!) {
     delete_likes_by_pk(id: $id) {
+      id
+    }
+  }
+`
+
+export const DELETE_POST_MUTATION = gql`
+  mutation DeletePostMutation($id: uuid!) {
+    delete_posts_by_pk(id: $id) {
       id
     }
   }

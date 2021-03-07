@@ -1,9 +1,9 @@
 import useSWR from 'swr'
 import Head from 'next/head'
-import { hasuraUserClient } from '~/lib/hasura-user-client'
-import { GET_THREADS_QUERY } from '~/graphql/queries'
-import ThreadList from '~/components/ThreadList'
 import Layout from '~/layouts/default'
+import ThreadList from '~/components/ThreadList'
+import { GET_THREADS_QUERY } from '~/graphql/queries'
+import { hasuraUserClient } from '~/lib/hasura-user-client'
 
 export const getStaticProps = async () => {
   const hasura = hasuraUserClient()
@@ -19,7 +19,7 @@ export const getStaticProps = async () => {
 
 export default function IndexPage({ initialData }) {  
   const hasura = hasuraUserClient()
-  const { data, error } = useSWR(GET_THREADS_QUERY, (query) => hasura.request(query), {
+  const { data } = useSWR(GET_THREADS_QUERY, (query) => hasura.request(query), {
     initialData,
     revalidateOnMount: true
   })
