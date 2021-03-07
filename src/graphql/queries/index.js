@@ -24,6 +24,7 @@ export const GET_THREADS_QUERY = gql`
     threads(order_by: {posts_aggregate: {max: {created_at: desc}}}) {
       id
       title
+      created_at
       author {
         id
         name
@@ -61,6 +62,7 @@ export const GET_THREAD_BY_ID = gql`
         message
         created_at
         author {
+          id
           name
         }
         likes {
