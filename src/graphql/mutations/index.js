@@ -41,3 +41,19 @@ export const ADD_POST_MUTATION = gql`
     }
   }
 `
+
+export const ADD_LIKE_MUTATION = gql`
+  mutation AddLikeMutation($post_id: uuid!) {
+    insert_likes_one(object: {post_id: $post_id}) {
+      id
+    }
+  }
+`
+
+export const DELETE_LIKE_MUTATION = gql`
+  mutation DeleteLikeMutation($id: uuid!) {
+    delete_likes_by_pk(id: $id) {
+      id
+    }
+  }
+`

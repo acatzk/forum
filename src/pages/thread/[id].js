@@ -4,10 +4,10 @@ import Layout from '~/layouts/default'
 import { useRouter } from 'next/router'
 import PostList from '~/components/PostList'
 import PostForm from '~/components/PostForm'
-import { GET_THREAD_BY_ID } from '~/graphql/queries'
-import { ADD_POST_MUTATION } from '~/graphql/mutations'
 import { useAuthState } from '~/context/auth'
+import { GET_THREAD_BY_ID } from '~/graphql/queries'
 import { gql, hasuraUserClient } from '~/lib/hasura-user-client'
+import { ADD_POST_MUTATION, ADD_LIKE_MUTATION, DELETE_LIKE_MUTATION } from '~/graphql/mutations'
 
 const GET_THREAD_IDs = gql`
   query {
@@ -83,6 +83,16 @@ export default function ThreadPage ({ initialData }) {
     }
   }
 
+  const handleLike = async ({ post_id }) => {
+    await hasura.request(ADD_LIKE_MUTATION, { post_id })
+    mutate()
+  }
+
+  const handleUnlike = async ({ id }) => {
+    await hasura.request(DELETE_LIKE_MUTATION, { id })
+    mutate()
+  }
+
   if (isFallback) return <Layout>Loading thread...</Layout>
 
   return (
@@ -92,7 +102,9 @@ export default function ThreadPage ({ initialData }) {
       </Head>
       <Layout>
         <h1 className="text-2xl font-semibold py-6">{ data.threads_by_pk.title }</h1>
-        <PostList posts={data.threads_by_pk.posts} />
+        <PostList 
+          posts={data.threads_by_pk.posts} 
+          actions={{ handleLike, handleUnlike }} />
         { !data.threads_by_pk.locked && isAuthenticated && <PostForm onSubmit={ handlePost }/> }
       </Layout>
     </>
