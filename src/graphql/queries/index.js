@@ -63,6 +63,15 @@ export const GET_THREAD_BY_ID = gql`
         author {
           name
         }
+        likes {
+          id
+          user_id
+        }
+        likes_aggregate {
+          aggregate {
+            count
+          }
+        }
       }
     }
   }
