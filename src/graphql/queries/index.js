@@ -61,6 +61,7 @@ export const GET_THREAD_BY_ID = gql`
         id
         message
         created_at
+        updated_at
         author {
           id
           name
