@@ -7,7 +7,9 @@ import PostForm from '~/components/PostForm'
 import { useAuthState } from '~/context/auth'
 import { GET_THREAD_BY_ID } from '~/graphql/queries'
 import { gql, hasuraUserClient } from '~/lib/hasura-user-client'
-import { ADD_POST_MUTATION, ADD_LIKE_MUTATION, DELETE_LIKE_MUTATION, DELETE_POST_MUTATION } from '~/graphql/mutations'
+import { ADD_POST_MUTATION, ADD_LIKE_MUTATION, 
+         DELETE_LIKE_MUTATION, DELETE_POST_MUTATION, 
+         UPDATE_POST_MUTATION } from '~/graphql/mutations'
 
 const GET_THREAD_IDs = gql`
   query {
@@ -104,6 +106,38 @@ export default function ThreadPage ({ initialData }) {
     })
   }
 
+  const handleUpdate = async ({ id, message }, { target }) => {
+    try {
+      const hasura = hasuraUserClient()
+      const { update_posts_by_pk } = await hasura.request(UPDATE_POST_MUTATION, {
+        id,
+        message
+      })
+
+      mutate({
+        ...data,
+        threads_by_pk: {
+          ...data.threads_by_pk,
+          posts: [
+            ...data.threads_by_pk.posts.reduce((posts, post) => {
+              if (post.id === id) return [...posts, {
+                ...post,
+                ...update_posts_by_pk
+              }]
+
+              return [...posts, post]
+            }, [])
+          ]
+        }
+      })
+
+      target.reset()
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   if (isFallback) return <Layout>Loading thread...</Layout>
 
   return (
@@ -115,8 +149,28 @@ export default function ThreadPage ({ initialData }) {
         <h1 className="text-2xl font-semibold py-6">{ data.threads_by_pk.title }</h1>
         <PostList 
           posts={data.threads_by_pk.posts} 
-          actions={{ handleLike, handleUnlike, handleDelete }} />
-        { !data.threads_by_pk.locked && isAuthenticated && <PostForm onSubmit={ handlePost }/> }
+          actions={{ handleLike, handleUnlike, handleUpdate, handleDelete }} />
+        { !data.threads_by_pk.locked && isAuthenticated &&
+        ( 
+          <div className="py-5 flex space-x-3">
+            <div className="py-2">
+              <svg className="w-6 h-6 fill-current text-gray-500" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24" 
+                    xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                </path>
+              </svg>
+            </div>
+            <div className="flex-1">
+              <PostForm onSubmit={ handlePost }/> 
+            </div>
+          </div>
+        ) }
       </Layout>
     </>
   )
