@@ -6,14 +6,15 @@ import { useAuthState } from '~/context/auth'
 import { useState, useCallback } from 'react'
 import formatRelative from 'date-fns/formatRelative'
 
-export default function Post ({ id, message, created_at, author, likes, likes_aggregate, actions }) {
+export default function Post ({ id, message, created_at, updated_at, author, likes, likes_aggregate, actions }) {
 
-  const timeago = formatRelative(Date.parse(created_at), new Date(), { weekStartsOn: 1 })
-  const { handleLike, handleUnlike, handleUpdate, handleDelete } = actions
+  const [editing, setEditing] = useState(false)
   const { isAuthenticated, user } = useAuthState()
   const isAuthor = isAuthenticated && author.id === user.id
-  const deletePost = () => handleDelete({ id })
-  const [editing, setEditing] = useState(false)
+  const updated = created_at !== updated_at
+  const formattedCreatedAt = formatRelative(Date.parse(created_at), new Date(), { weekStartsOn: 1 })
+  const formattedUpdatedAt = formatRelative(Date.parse(updated_at), new Date(), { weekStartsOn: 1 })
+  const { handleLike, handleUnlike, handleUpdate, handleDelete } = actions
 
   const toggleEditing = useCallback(() => {
     setEditing(v => !v)
@@ -23,6 +24,8 @@ export default function Post ({ id, message, created_at, author, likes, likes_ag
     await handleUpdate({ id, message }, ...args)
     setEditing(false)
   } 
+
+  const deletePost = () => handleDelete({ id })
 
   return (
     <div className="flex items-start space-x-2 py-3">
@@ -43,7 +46,9 @@ export default function Post ({ id, message, created_at, author, likes, likes_ag
               </Link>
             </h3>
             <span>&middot;</span>
-            <span className="text-xs text-gray-500"> { timeago }</span>
+            <div className="space-x-2 text-bold">
+              <span className="text-xs text-gray-500">Posted { formattedCreatedAt }</span>
+            </div>
           </div>
           {isAuthor && 
             <div className="flex items-center space-x-2">
@@ -68,6 +73,7 @@ export default function Post ({ id, message, created_at, author, likes, likes_ag
               onSubmit={saveAndUpdate}
               />) : 
            (<Markdown source={ message }/>) }
+           { updated && (<span className="text-xs text-gray-500">Updated { formattedUpdatedAt }</span>) }
         </div>
         <Reactions 
           post_id={id} 

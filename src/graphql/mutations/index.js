@@ -36,6 +36,7 @@ export const ADD_POST_MUTATION = gql`
       id
       message
       created_at
+      updated_at
       author {
         id
         name
@@ -82,6 +83,7 @@ export const UPDATE_POST_MUTATION = gql`
     update_posts_by_pk(pk_columns: {id: $id}, _set: {message: $message}) {
       id
       message
+      updated_at
     }
   }
 `
