@@ -26,7 +26,7 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function AskPage({ categories }) {  
+export default function NewThreadPage({ categories }) {  
   /**
    * Init built in 
    * functions
@@ -82,7 +82,7 @@ export default function AskPage({ categories }) {
       </Head>
       <Layout>
         <div className="mt-10 w-full bg-white m-auto px-9 py-10 rounded-none sm:rounded-lg shadow">
-          <p className="text-2xl text-indigo-600 text-center">Ask anything question</p>
+          <p className="text-2xl text-indigo-600 text-center">Post new thread</p>
           <form onSubmit={ handleSubmit(onSubmit) } className="space-y-3">
             <div className="flex flex-col">
               <label className="block">

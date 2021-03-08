@@ -36,8 +36,8 @@ export default function Header () {
                 </ActiveLink>
               </div>
               <div className="flex items-center space-x-2">
-                <Link href="/ask">
-                  <a className="px-3 py-1.5 rounded-md text-sm font-medium bg-indigo-500 text-white border border-indigo-600 transition ease-in-out duration-200 hover:bg-white hover:text-indigo-600">Ask A Question</a>
+                <Link href="/new">
+                  <a className="px-3 py-1.5 rounded-md text-sm font-medium bg-indigo-500 text-white border border-indigo-600 transition ease-in-out duration-200 hover:bg-white hover:text-indigo-600">Post new thread</a>
                 </Link>
                 <button onClick={logout} className="px-3 py-1.5 rounded-md text-sm font-medium text-indigo-500 bg-white border border-indigo-100 transition ease-in-out duration-200 hover:border-indigo-600">Logout</button>
               </div>
