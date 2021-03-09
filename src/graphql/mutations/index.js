@@ -96,3 +96,12 @@ export const UPDATE_LOCKED_STATUS_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_ANSWERED_STATUS_MUTATION = gql`
+  mutation updateAnsweredStatus($id: uuid!, $answered: Boolean) {
+    update_threads_by_pk(pk_columns: {id: $id}, _set: {answered: $answered}) {
+      id
+      answered
+    }
+  }
+`

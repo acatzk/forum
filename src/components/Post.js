@@ -71,7 +71,7 @@ export default function Post ({ id, message, created_at, updated_at, author, lik
            (<Markdown source={ message }/>) }
            <div className="space-x-1">
             <span className="text-xs text-gray-500">Posted { formattedCreatedAt }</span>
-            <span>&middot;</span>
+            { updated && (<span>&middot;</span>) }
             { updated && (<span className="text-xs text-gray-500">Updated { formattedUpdatedAt }</span>) }
            </div>
         </div>
