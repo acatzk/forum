@@ -45,10 +45,6 @@ export default function Post ({ id, message, created_at, updated_at, author, lik
                 <a className="hover:underline hover:text-indigo-600 transition ease-in-out duration-200">{ author.name }</a>
               </Link>
             </h3>
-            <span>&middot;</span>
-            <div className="space-x-2 text-bold">
-              <span className="text-xs text-gray-500">Posted { formattedCreatedAt }</span>
-            </div>
           </div>
           {isAuthor && 
             <div className="flex items-center space-x-2">
@@ -66,14 +62,18 @@ export default function Post ({ id, message, created_at, updated_at, author, lik
               </button>
             </div>}
         </div>
-        <div className="text-base">
+        <div className="text-base py-2">
           { editing ?
            (<PostForm 
               defaultValues={{ message }} 
               onSubmit={saveAndUpdate}
               />) : 
            (<Markdown source={ message }/>) }
-           { updated && (<span className="text-xs text-gray-500">Updated { formattedUpdatedAt }</span>) }
+           <div className="space-x-1">
+            <span className="text-xs text-gray-500">Posted { formattedCreatedAt }</span>
+            <span>&middot;</span>
+            { updated && (<span className="text-xs text-gray-500">Updated { formattedUpdatedAt }</span>) }
+           </div>
         </div>
         <Reactions 
           post_id={id} 

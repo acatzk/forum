@@ -9,7 +9,7 @@ import { GET_THREAD_BY_ID } from '~/graphql/queries'
 import { gql, hasuraUserClient } from '~/lib/hasura-user-client'
 import { ADD_POST_MUTATION, ADD_LIKE_MUTATION, 
          DELETE_LIKE_MUTATION, DELETE_POST_MUTATION, 
-         UPDATE_POST_MUTATION } from '~/graphql/mutations'
+         UPDATE_POST_MUTATION, UPDATE_LOCKED_STATUS_MUTATION } from '~/graphql/mutations'
 
 const GET_THREAD_IDs = gql`
   query {
@@ -50,7 +50,7 @@ export default function ThreadPage ({ initialData }) {
   const hasura = hasuraUserClient()
   const router = useRouter()
   const { id, isFallback } = router.query
-  const { isAuthenticated } = useAuthState()
+  const { isAuthenticated, user } = useAuthState()
 
   const { data, mutate } = useSWR(
     [GET_THREAD_BY_ID, id], 
@@ -58,6 +58,7 @@ export default function ThreadPage ({ initialData }) {
     { initialData, revalidateOnMount: true }
   )
   if (!isFallback && !data) return <p>No such thread found</p>
+  const isAuthor = isAuthenticated && data.threads_by_pk.author.id === user.id
 
   const handlePost = async ({ message }, { target }) => {
     try {
@@ -88,6 +89,21 @@ export default function ThreadPage ({ initialData }) {
   const handleLike = async ({ post_id }) => {
     await hasura.request(ADD_LIKE_MUTATION, { post_id })
     mutate()
+  }
+
+  const handleLock = async () => {
+    try {
+      const { update_threads_by_pk } = await hasura.request(UPDATE_LOCKED_STATUS_MUTATION, {
+        id,
+        locked: !data.threads_by_pk.locked
+      })
+      mutate({
+        ...data,
+        ...update_threads_by_pk,
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const handleUnlike = async ({ id }) => {
@@ -146,7 +162,17 @@ export default function ThreadPage ({ initialData }) {
         <title>{ data.threads_by_pk.title } | Forum</title>
       </Head>
       <Layout>
-        <h1 className="text-2xl font-semibold py-6">{ data.threads_by_pk.title }</h1>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <h1 className="text-2xl font-semibold py-6">{ data.threads_by_pk.title }</h1>
+            { data.threads_by_pk.locked && <span className="bg-red-100 border border-red-200 text-red-500 px-3 py-0.5 rounded-full uppercase font-bold">Locked</span> }
+          </div>
+          {isAuthor && (
+            <button onClick={ handleLock } className="px-2 py-0.5 rounded text-sm bg-gray-200 border hover:bg-gray-300 border-gray-300 transition ease-in-out duration-200">
+              { data.threads_by_pk.locked ? 'Unlock' : 'Lock' }
+            </button>
+          )}
+        </div>
         <PostList 
           posts={data.threads_by_pk.posts} 
           actions={{ handleLike, handleUnlike, handleUpdate, handleDelete }} />

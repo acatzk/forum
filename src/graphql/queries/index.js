@@ -57,6 +57,9 @@ export const GET_THREAD_BY_ID = gql`
       id
       title
       locked
+      author {
+        id
+      }
       posts {
         id
         message

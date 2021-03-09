@@ -87,3 +87,12 @@ export const UPDATE_POST_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_LOCKED_STATUS_MUTATION = gql`
+  mutation updateLockedStatus($id: uuid!, $locked: Boolean) {
+    update_threads_by_pk(pk_columns: {id: $id}, _set: {locked: $locked}) {
+      id
+      locked
+    }
+  }
+`
