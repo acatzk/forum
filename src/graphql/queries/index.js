@@ -24,6 +24,9 @@ export const GET_THREADS_QUERY = gql`
     threads(order_by: {posts_aggregate: {max: {created_at: desc}}}) {
       id
       title
+      locked
+      pinned
+      answered
       created_at
       author {
         id
@@ -57,6 +60,8 @@ export const GET_THREAD_BY_ID = gql`
       id
       title
       locked
+      answered
+      pinned
       author {
         id
       }
@@ -92,6 +97,8 @@ export const GET_CATEGORY_BY_ID = gql`
         id
         title
         pinned
+        answered
+        locked
         author {
           id
           name
@@ -120,6 +127,9 @@ export const GET_TODAY_POST_QUERY = gql`
     threads(where: {posts: {created_at: {_gte: $from, _lte: $to}}}, order_by: {posts_aggregate: {max: {created_at: desc}}}) {
       id
       title
+      pinned
+      answered
+      locked
       author {
         id
         name
@@ -151,6 +161,9 @@ export const GET_ANSWERED_POST_QUERY = gql`
     threads(where: {answered: {_eq: true}}, order_by: {posts_aggregate: {max: {created_at: desc}}}) {
       id
       title
+      pinned
+      answered
+      locked
       author {
         id
         name
@@ -182,6 +195,9 @@ export const GET_UNANSWERED_POST_QUERY = gql`
     threads(where: {answered: {_neq: true}}, order_by: {posts_aggregate: {max: {created_at: desc}}}) {
       id
       title
+      pinned
+      answered
+      locked
       author {
         id
         name

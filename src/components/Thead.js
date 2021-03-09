@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import formatRelative from 'date-fns/formatRelative'
 
-export default function Thread ({ id, title, category, posts, posts_aggregate, pinned }) {
+export default function Thread ({ id, title, category, posts, posts_aggregate, pinned, locked }) {
   const { count } = posts_aggregate.aggregate
   const hasReplies = count > 1
   const [lastPost] = posts
@@ -30,6 +30,15 @@ export default function Thread ({ id, title, category, posts, posts_aggregate, p
                 <svg className="fill-current w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
                   <path fill="none" d="M0 0h24v24H0z"/>
                   <path d="M22.314 10.172l-1.415 1.414-.707-.707-4.242 4.242-.707 3.536-1.415 1.414-4.242-4.243-4.95 4.95-1.414-1.414 4.95-4.95-4.243-4.242 1.414-1.415L8.88 8.05l4.242-4.242-.707-.707 1.414-1.415z"/>
+                </svg>
+              </div>
+            )}
+            {locked && (
+              <div>
+                <svg className="fill-current w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M19 10h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1V9a7 7 0 1 1 14 0v1zm-2 0V9A5 5 0 0 0 7 9v1h10zm-6 4v4h2v-4h-2z" />
                 </svg>
               </div>
             )}
