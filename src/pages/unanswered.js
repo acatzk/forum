@@ -30,7 +30,7 @@ export default function AnsweredPostsPage({ initialData }) {
         <title>Forum</title>
       </Head>
       <Layout>
-        <h1 className="text-2xl pt-6 font-semibold">Unanswered Post</h1>
+        <h1 className="text-3xl pt-8 pb-3 font-semibold text-gray-700">Unanswered Post</h1>
         <ThreadList threads={data.threads} />
       </Layout>
     </>
