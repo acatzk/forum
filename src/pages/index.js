@@ -30,6 +30,7 @@ export default function IndexPage({ initialData }) {
         <title>Forum</title>
       </Head>
       <Layout>
+        <h1 className="text-3xl pt-8 pb-3 font-semibold text-gray-700">Recent Activity</h1>
         <ThreadList threads={data.threads} />
       </Layout>
     </>

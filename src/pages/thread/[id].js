@@ -180,19 +180,80 @@ export default function ThreadPage ({ initialData }) {
       <Layout>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <h1 className="text-2xl font-semibold py-6">{ data.threads_by_pk.title }</h1>
+            <h1 className="text-3xl py-8 font-semibold text-gray-700">{ data.threads_by_pk.title }</h1>
             { data.threads_by_pk.locked 
-                && <span className="bg-red-100 border border-red-200 text-red-500 px-3 py-0.5 rounded-full uppercase font-bold">Locked</span> }
+                && <div className="flex items-center bg-red-100 border border-red-200 text-red-500 px-2 py-0.5 rounded-full space-x-1">
+                      <span>
+                        <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                          <path fill="none" d="M0 0h24v24H0z" />
+                          <path
+                            d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zm-7 7.732V18h2v-2.268a2 2 0 1 0-2 0zM16 8V7a4 4 0 1 0-8 0v1h8z" />
+                        </svg>
+                      </span>
+                      <span className="uppercase font-semibold text-xs">Locked</span>
+                    </div> }
             { data.threads_by_pk.answered 
-                && <span className="bg-green-100 border border-green-200 text-green-500 px-3 py-0.5 rounded-full uppercase font-bold">Answered</span> }
+               && <div className="flex items-center bg-green-100 border border-green-200 text-green-500 px-2 py-0.5 rounded-full space-x-1">
+                    <span>
+                      <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z" />
+                      </svg>
+                    </span>
+                    <span className="uppercase font-semibold text-xs">Answered</span>
+                  </div> }
           </div>
           {isAuthor && (
             <div className="flex items-center space-x-2">
-              <button onClick={ handleLock } className="px-2 py-0.5 rounded text-sm bg-gray-200 border hover:bg-gray-300 border-gray-300 transition ease-in-out duration-200">
-                { data.threads_by_pk.locked ? 'Unlock' : 'Lock' }
+              <button 
+                onClick={ handleLock } 
+                className="px-2 py-0.5 rounded text-sm bg-gray-200 border hover:bg-gray-300 border-gray-300 focus:outline-none transition ease-in-out duration-200 text-gray-600">
+                { data.threads_by_pk.locked ? (
+                  <div className="flex items-center space-x-2">
+                    <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path
+                        d="M7 10h13a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1V9a7 7 0 0 1 13.262-3.131l-1.789.894A5 5 0 0 0 7 9v1zm3 5v2h4v-2h-4z" />
+                    </svg>
+                    <span>Unlock</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <span>
+                      <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                          d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zm-7 7.732V18h2v-2.268a2 2 0 1 0-2 0zM16 8V7a4 4 0 1 0-8 0v1h8z" />
+                      </svg>
+                    </span>
+                    <span>Lock</span>
+                  </div>
+                ) }
               </button>
-              <button onClick={ handleAnswer } className="px-2 py-0.5 rounded text-sm bg-gray-200 border hover:bg-gray-300 border-gray-300 transition ease-in-out duration-200">
-                { data.threads_by_pk.answered ? 'Mark as unanswerd' : 'Mark as answered' }
+              <button 
+                onClick={ handleAnswer } 
+                className="px-2 py-0.5 rounded text-sm bg-gray-200 border hover:bg-gray-300 border-gray-300 transition ease-in-out duration-200 focus:outline-none text-gray-600">
+                { data.threads_by_pk.answered ? (
+                  <div className="flex items-center space-x-2">
+                    <span>
+                      <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path
+                          d="M18.803 8.493A5.023 5.023 0 0 0 22 8.9V20a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h13.1c-.066.323-.1.658-.1 1a4.98 4.98 0 0 0 1.193 3.241l-5.132 4.442-6.414-5.445-1.294 1.524 7.72 6.555 6.73-5.824zM21 7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                      </svg>
+                    </span>
+                    <span>Mark as unanswered</span>
+                  </div>
+                ) : <div className="flex items-center space-x-2">
+                      <span>
+                        <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                          <path fill="none" d="M0 0h24v24H0z" />
+                          <path
+                            d="M22 13.341A6 6 0 0 0 14.341 21H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v9.341zm-9.94-1.658L5.648 6.238 4.353 7.762l7.72 6.555 7.581-6.56-1.308-1.513-6.285 5.439zM19 22l-3.536-3.536 1.415-1.414L19 19.172l3.536-3.536 1.414 1.414L19 22z" />
+                        </svg>
+                      </span>
+                      <span>Mark as answered</span>
+                    </div> }
               </button>
             </div>
           )}

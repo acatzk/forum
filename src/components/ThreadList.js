@@ -4,7 +4,7 @@ export default function ThreadList ({ threads }) {
   if (!threads) return null
 
   return (
-    <div className="py-6">
+    <div className="py-2 w-full divide-y">
       { threads.map(Thread) }
     </div>
   )

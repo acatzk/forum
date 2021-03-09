@@ -51,7 +51,7 @@ export default function RegisterPage() {
       </Head>
       <Layout>
         <div className="flex h-screen">
-          <div className="w-full bg-white m-auto max-w-full sm:max-w-md px-9 py-14 rounded-none sm:rounded-lg shadow">
+         <div className="w-full bg-white m-auto max-w-full sm:max-w-md px-9 py-14 rounded-none sm:rounded-xl shadow-xl">
             <h1 className="text-3xl text-center font-medium mb-4 text-gray-800">Create Account</h1>
             <form onSubmit={ handleSubmit(onSubmit) } className="space-y-3">
               <div className="flex flex-col">
