@@ -59,6 +59,7 @@ export default function CategoryPage ({ initialData }) {
       </Head>
       <Layout>
         <h1 className="text-2xl font-semibold py-6">{ data.categories_by_pk.name }</h1>
+        <ThreadList threads={data.categories_by_pk.pinned} />
         <ThreadList threads={data.categories_by_pk.threads} />
       </Layout>
     </>

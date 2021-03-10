@@ -105,3 +105,17 @@ export const UPDATE_ANSWERED_STATUS_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_THREAD_BY_ID_MUTATION = gql`
+  mutation deleteThreadById($id: uuid!) {
+    delete_posts(where: {thread_id: {_eq: $id}}) {
+      affected_rows
+      returning {
+        id
+      }
+    }
+    delete_threads_by_pk(id: $id) {
+      id
+    }
+  }
+`

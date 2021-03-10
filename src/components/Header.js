@@ -11,22 +11,22 @@ export default function Header () {
         {isAuthenticated ? (
             <div className="flex items-center justify-between flex-wrap">
               <div className="font-medium space-x-2">
-                <ActiveLink href="/" current="text-indigo-200">
+                <ActiveLink href="/" current="border-b-2 border-white pb-4">
                   <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
                     Home
                   </a>
                 </ActiveLink>
-                <ActiveLink href="/today" current="text-indigo-200">
+                <ActiveLink href="/today" current="border-b-2 border-white pb-4">
                   <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
                     Today's Post
                   </a>
                 </ActiveLink>
-                <ActiveLink href="/answered" current="text-indigo-200">
+                <ActiveLink href="/answered" current="border-b-2 border-white pb-4">
                   <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
                     Answered Post
                   </a>
                 </ActiveLink>
-                <ActiveLink href="/unanswered" current="text-indigo-200">
+                <ActiveLink href="/unanswered" current="border-b-2 border-white pb-4">
                   <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
                     Unanswered Post
                   </a>
@@ -47,10 +47,10 @@ export default function Header () {
                 <a className="text-2xl font-semibold text-white transition ease-in-out duration-200">Forum</a>
               </ActiveLink>
               <div className="space-x-2">
-                <ActiveLink href="/login" current="text-indigo-200">
+                <ActiveLink href="/login" current="border-b-2 border-white pb-4">
                   <a className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">Login</a>
                 </ActiveLink>
-                <ActiveLink href="/register" current="text-indigo-200">
+                <ActiveLink href="/register" current="border-b-2 border-white pb-4">
                   <a className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">Register</a>
                 </ActiveLink>
               </div>
