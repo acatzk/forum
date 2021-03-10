@@ -10,7 +10,7 @@ import { gql, hasuraUserClient } from '~/lib/hasura-user-client'
 import { ADD_POST_MUTATION, ADD_LIKE_MUTATION, 
          DELETE_LIKE_MUTATION, DELETE_POST_MUTATION, 
          UPDATE_POST_MUTATION, UPDATE_LOCKED_STATUS_MUTATION,
-         UPDATE_ANSWERED_STATUS_MUTATION } from '~/graphql/mutations'
+         UPDATE_ANSWERED_STATUS_MUTATION, DELETE_THREAD_BY_ID_MUTATION } from '~/graphql/mutations'
 
 const GET_THREAD_IDs = gql`
   query {
@@ -58,7 +58,7 @@ export default function ThreadPage ({ initialData }) {
     (query, id) => hasura.request(query, { id }), 
     { initialData, revalidateOnMount: true }
   )
-  if (!isFallback && !data) return <p>No such thread found</p>
+
   const isAuthor = isAuthenticated && data.threads_by_pk.author.id === user.id
 
   const handlePost = async ({ message }, { target }) => {
@@ -170,7 +170,17 @@ export default function ThreadPage ({ initialData }) {
     }
   }
 
+  const handleDeleteThread = async () => {
+    try {
+      await hasura.request(DELETE_THREAD_BY_ID_MUTATION, { id })
+      router.push('/')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   if (isFallback) return <Layout>Loading thread...</Layout>
+  if (!isFallback && !data) return <Layout>No such thread found</Layout>
 
   return (
     <>
@@ -255,6 +265,18 @@ export default function ThreadPage ({ initialData }) {
                       <span>Mark as answered</span>
                     </div> }
               </button>
+              <button 
+                onClick={ handleDeleteThread } 
+                className="flex items-center space-x-2 px-2 py-0.5 rounded text-sm bg-gray-200 border hover:bg-gray-300 border-gray-300 transition ease-in-out duration-200 focus:outline-none text-gray-600">
+                <span>
+                  <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path
+                      d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm-8 5v6h2v-6H9zm4 0v6h2v-6h-2zM9 4v2h6V4H9z" />
+                  </svg>
+                </span>
+                <span>Delete thread</span>
+              </button>
             </div>
           )}
         </div>
@@ -279,7 +301,7 @@ export default function ThreadPage ({ initialData }) {
                 <div className="flex-1">
                   <PostForm onSubmit={ handlePost }/> 
                 </div>
-              </div>)}
+              </div>) }
       </Layout>
     </>
   )
