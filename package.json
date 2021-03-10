@@ -25,6 +25,7 @@
     "react-markdown": "^5.0.3",
     "react-mde": "^11.0.6",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-toast-notifications": "^2.4.3",
     "react-toastify": "^7.0.3",
     "swr": "^0.4.2",
     "tailwindcss": "^2.0.3",

@@ -12,6 +12,7 @@ const AuthStateContext = createContext()
 const usePersistedAuthState = createPersistedState('forum-auth')
 
 const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+const UPDATE_USER = "UPDATE_USER"
 const LOGOUT = "LOGOUT"
 
 function reducer (state, { payload, type }) {
@@ -21,6 +22,14 @@ function reducer (state, { payload, type }) {
         ...state,
         ...payload,
         isAuthenticated: true
+      }
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...payload
+        }
       }
     case LOGOUT:
       return initialState
@@ -74,10 +83,12 @@ function AuthProvider ({ children }) {
     dispatch({ type: LOGIN_SUCCESS, payload: { token, user } })
   }
 
+  const updateUser = (payload) => dispatch({ type: UPDATE_USER, payload })
+
   const logout = () => dispatch({ type: LOGOUT })
 
   return (
-    <AuthDispatchContext.Provider value={{ login, register, logout }}>
+    <AuthDispatchContext.Provider value={{ login, register, updateUser, logout }}>
       <AuthStateContext.Provider value={state}>
         { children }
       </AuthStateContext.Provider>
