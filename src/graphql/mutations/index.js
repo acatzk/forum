@@ -119,3 +119,13 @@ export const DELETE_THREAD_BY_ID_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_USER_MUTATION = gql`
+  mutation updateUserMutation($id: uuid!, $name: String!) {
+    update_users_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
+      id
+      name
+      updated_at
+    }
+  }
+`

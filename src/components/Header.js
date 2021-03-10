@@ -2,8 +2,36 @@ import ActiveLink from './ActiveLink'
 import { useAuthState, useAuthDispatch } from '~/context/auth'
 
 export default function Header () {
-  const { isAuthenticated, user } = useAuthState()
+  const { isAuthenticated } = useAuthState()
   const { logout } = useAuthDispatch()
+
+  const links = [
+    {
+      text: 'Home',
+      href: '/',
+      isCurrent: true
+    },
+    {
+      text: 'Profile',
+      href: '/edit-profile',
+      isCurrent: true
+    },
+    {
+      text: 'Today\'s Post',
+      href: '/today',
+      isCurrent: true
+    },
+    {
+      text: 'Answered Post',
+      href: '/answered',
+      isCurrent: true
+    },
+    {
+      text: 'Unanswered Post',
+      href: '/unanswered',
+      isCurrent: true
+    }
+  ]
 
   return (
     <header className="bg-gray-900 text-white py-3 shadow">
@@ -11,34 +39,15 @@ export default function Header () {
         {isAuthenticated ? (
             <div className="flex items-center justify-between flex-wrap">
               <div className="font-medium space-x-2">
-                <ActiveLink href="/" current="border-b-2 border-white pb-4">
-                  <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
-                    Home
-                  </a>
-                </ActiveLink>
-                <ActiveLink href="/today" current="border-b-2 border-white pb-4">
-                  <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
-                    Today's Post
-                  </a>
-                </ActiveLink>
-                <ActiveLink href="/answered" current="border-b-2 border-white pb-4">
-                  <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
-                    Answered Post
-                  </a>
-                </ActiveLink>
-                <ActiveLink href="/unanswered" current="border-b-2 border-white pb-4">
-                  <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
-                    Unanswered Post
-                  </a>
-                </ActiveLink>
+                {links.map((link, i) => (
+                  <Link key={i} href={ link.href } text={ link.text } isCurrent={ link.isCurrent }/>
+                ))}
               </div>
               <div className="flex items-center space-x-2">
-                <ActiveLink href="/new" current="text-indigo-200">
-                  <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
-                    Post new thread
-                  </a>
-                </ActiveLink>
-                <button onClick={logout} className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">Logout</button>
+                <Link text="Post new thread" href="/new" />
+                <div>
+                  <button onClick={logout} className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">Logout</button>
+                </div>
               </div>
             </div>
           ) : (
@@ -47,16 +56,22 @@ export default function Header () {
                 <a className="text-2xl font-semibold text-white transition ease-in-out duration-200">Forum</a>
               </ActiveLink>
               <div className="space-x-2">
-                <ActiveLink href="/login" current="border-b-2 border-white pb-4">
-                  <a className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">Login</a>
-                </ActiveLink>
-                <ActiveLink href="/register" current="border-b-2 border-white pb-4">
-                  <a className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">Register</a>
-                </ActiveLink>
+                <Link text="Login" href="/login" />
+                <Link text="Register" href="/register" />
               </div>
             </div>
         )}
       </div>
     </header>
+  )
+}
+
+function Link ({ text, href, isCurrent }) {
+  return (
+    <ActiveLink href={ href } current={ isCurrent ? 'border-0 text-indigo-200 md:text-white md:border-b-2 border-white pb-4' : '' }>
+      <a href="#" className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">
+        { text }
+      </a>
+    </ActiveLink>
   )
 }

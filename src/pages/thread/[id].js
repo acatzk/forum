@@ -6,6 +6,7 @@ import PostList from '~/components/PostList'
 import PostForm from '~/components/PostForm'
 import { useAuthState } from '~/context/auth'
 import { GET_THREAD_BY_ID } from '~/graphql/queries'
+import { useToasts } from 'react-toast-notifications'
 import { gql, hasuraUserClient } from '~/lib/hasura-user-client'
 import { ADD_POST_MUTATION, ADD_LIKE_MUTATION, 
          DELETE_LIKE_MUTATION, DELETE_POST_MUTATION, 
@@ -48,8 +49,10 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export default function ThreadPage ({ initialData }) {
-  const hasura = hasuraUserClient()
+
   const router = useRouter()
+  const { addToast } = useToasts()
+  const hasura = hasuraUserClient()
   const { id, isFallback } = router.query
   const { isAuthenticated, user } = useAuthState()
 
@@ -102,6 +105,8 @@ export default function ThreadPage ({ initialData }) {
         ...data,
         ...update_threads_by_pk,
       })
+
+      addToast(`${!data.threads_by_pk.locked ? 'You locked the thread' : 'You unlocked the thread'}`, { appearance: 'success', autoDismiss: true })
     } catch (err) {
       console.log(err)
     }
@@ -136,6 +141,7 @@ export default function ThreadPage ({ initialData }) {
         posts: data.threads_by_pk.posts.filter(p => p.id !== id)
       }
     })
+    addToast('Successfully Deleted!', { appearance: 'success', autoDismiss: true })
   }
 
   const handleUpdate = async ({ id, message }, { target }) => {
@@ -173,9 +179,10 @@ export default function ThreadPage ({ initialData }) {
   const handleDeleteThread = async () => {
     try {
       await hasura.request(DELETE_THREAD_BY_ID_MUTATION, { id })
+      addToast('Successfully Deleted!', { appearance: 'success', autoDismiss: true })
       router.push('/')
     } catch (err) {
-      console.log(err)
+      addToast(err, { appearance: 'error', autoDismiss: true })
     }
   }
 

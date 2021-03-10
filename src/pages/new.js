@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import Spinner from '~/components/Spinner'
 import { useState, useEffect } from 'react'
 import { useAuthState } from '~/context/auth'
+import { useToasts } from 'react-toast-notifications'
 import { useForm, Controller } from 'react-hook-form'
 import { GET_CATEGORY_QUERY } from '~/graphql/queries'
 import { ADD_THREAD_MUTATION } from '~/graphql/mutations'
@@ -32,8 +33,9 @@ export default function NewThreadPage({ categories }) {
    * functions
    */
   const router = useRouter()
-  const { isAuthenticated } = useAuthState()
+  const { addToast } = useToasts()
   const hasura = hasuraUserClient()
+  const { isAuthenticated } = useAuthState()
   const [selectedTab, setSelectedTab] = useState('write')
 
   /**
@@ -68,10 +70,12 @@ export default function NewThreadPage({ categories }) {
         message
       })
 
+      addToast('Successfully Added!', { appearance: 'success', autoDismiss: true })
+
       router.push(`/thread/${insert_threads_one.id}`)
       
     } catch (err) {
-      console.log(`Error: ${err}`)
+      addToast(err, { appearance: 'error', autoDismiss: true })
     }
   }
   
