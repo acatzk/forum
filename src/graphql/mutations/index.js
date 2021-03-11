@@ -6,6 +6,7 @@ export const ADD_USER_MUTATION = gql`
       id
       email
       name
+      last_seen
     }
   }
 `
@@ -126,6 +127,18 @@ export const UPDATE_USER_MUTATION = gql`
       id
       name
       updated_at
+    }
+  }
+`
+
+export const UPDATE_USER_LAST_SEEN_MUTATION = gql`
+  mutation updateUserlastSeen($id: uuid!, $now: timestamptz!) {
+    update_users(where: {id: {_eq: $id}}, _set: {last_seen: $now}) {
+      affected_rows
+      returning {
+        id
+        last_seen
+      }
     }
   }
 `
