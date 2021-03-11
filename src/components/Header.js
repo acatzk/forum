@@ -34,7 +34,7 @@ export default function Header () {
   ]
 
   return (
-    <header className="bg-gray-900 text-white py-3 shadow">
+    <header className="bg-indigo-900 text-white py-3 shadow">
       <div className="container mx-auto max-w-5xl px-3">
         {isAuthenticated ? (
             <div className="flex items-center justify-between flex-wrap">
@@ -52,12 +52,12 @@ export default function Header () {
             </div>
           ) : (
             <div className="flex items-center justify-between flex-wrap">
-              <ActiveLink href="/">
-                <a className="text-2xl font-semibold text-white transition ease-in-out duration-200">Forum</a>
-              </ActiveLink>
+              <span className="text-2xl font-semibold text-white transition ease-in-out duration-200">
+                <Link text="Forum" href="/" />
+              </span>
               <div className="space-x-2">
-                <Link text="Login" href="/login" />
-                <Link text="Register" href="/register" />
+                <Link text="Login" href="/login" isCurrent />
+                <Link text="Register" href="/register" isCurrent />
               </div>
             </div>
         )}

@@ -104,6 +104,17 @@ export default function RegisterPage() {
                 </label>
                 { errors.password && <span className="text-xs text-red-500 font-medium">{ errors.password.message }</span> }
               </div>
+              <div>
+                <label className="flex items-center space-x-2">
+                  <input 
+                    type="checkbox" 
+                    name="save_last_seen" 
+                    className="rounded"
+                    ref={register}
+                    defaultChecked={true} />
+                  <span className="text-sm text-gray-500">Show me as online users</span>
+                </label>
+              </div>
               <div className="flex items-center justify-start">
                 <button disabled={ isSubmitting }
                         className={ `${ isSubmitting ? 'opacity-50 cursor-not-allowed' : 'opacity-100 hover:bg-white hover:text-indigo-500' } flex justify-center w-24 border border-indigo-600 bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition ease-in-out duration-200`} 

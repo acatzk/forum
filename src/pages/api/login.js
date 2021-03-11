@@ -9,6 +9,7 @@ const GET_USER_BY_EMAIL_QUERY = gql`
       name
       email
       password
+      last_seen
     }
   }
 `
