@@ -195,30 +195,34 @@ export default function ThreadPage ({ initialData }) {
         <title>{ data.threads_by_pk.title } | Forum</title>
       </Head>
       <Layout>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <h1 className="text-3xl py-8 font-semibold text-gray-700">{ data.threads_by_pk.title }</h1>
-            { data.threads_by_pk.locked 
-                && <div className="flex items-center bg-red-100 border border-red-200 text-red-500 px-2 py-0.5 rounded-full space-x-1">
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            <h1 className="text-3xl pt-8 pb-3 font-semibold text-indigo-700">
+              { data.threads_by_pk.title }
+              <div className="flex items-center space-x-3 py-2">
+                { data.threads_by_pk.locked 
+                  && <div className="flex items-center bg-red-100 border border-red-200 text-red-500 px-2 py-0.5 rounded-full space-x-1">
+                        <span>
+                          <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                              d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zm-7 7.732V18h2v-2.268a2 2 0 1 0-2 0zM16 8V7a4 4 0 1 0-8 0v1h8z" />
+                          </svg>
+                        </span>
+                        <span className="uppercase font-semibold text-xs">Locked</span>
+                      </div> }
+              { data.threads_by_pk.answered 
+                && <div className="flex items-center bg-green-100 border border-green-200 text-green-500 px-2 py-0.5 rounded-full space-x-1">
                       <span>
                         <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
                           <path fill="none" d="M0 0h24v24H0z" />
-                          <path
-                            d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zm-7 7.732V18h2v-2.268a2 2 0 1 0-2 0zM16 8V7a4 4 0 1 0-8 0v1h8z" />
+                          <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z" />
                         </svg>
                       </span>
-                      <span className="uppercase font-semibold text-xs">Locked</span>
+                      <span className="uppercase font-semibold text-xs">Answered</span>
                     </div> }
-            { data.threads_by_pk.answered 
-               && <div className="flex items-center bg-green-100 border border-green-200 text-green-500 px-2 py-0.5 rounded-full space-x-1">
-                    <span>
-                      <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
-                        <path fill="none" d="M0 0h24v24H0z" />
-                        <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z" />
-                      </svg>
-                    </span>
-                    <span className="uppercase font-semibold text-xs">Answered</span>
-                  </div> }
+              </div>
+            </h1>
           </div>
           {isAuthor && (
             <div className="flex items-center space-x-2">

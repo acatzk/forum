@@ -34,7 +34,7 @@ export default function Header () {
   ]
 
   return (
-    <header className="bg-indigo-900 text-white py-3 shadow">
+    <header className="bg-indigo-700 text-white py-3 shadow">
       <div className="container mx-auto max-w-5xl px-3">
         {isAuthenticated ? (
             <div className="flex items-center justify-between flex-wrap">
