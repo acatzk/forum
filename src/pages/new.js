@@ -95,8 +95,21 @@ export default function NewThreadPage({ categories }) {
                       ref={register({
                         required: 'You must select a category for your thread'
                       })}>
-                  {categories.map(({ id, name }) => (
-                    <option value={id} key={id}>{ name }</option>
+                  {categories.map(({ id, name, subCategories }) => (
+                    <>
+                      <option value={id} key={id}>
+                        { name }
+                      </option>
+                      {subCategories.length > 0 && (
+                        <optgroup label="Sub Categories" className="text-gray-600">
+                          {subCategories.map(({ id, name }) => (
+                            <option value={id} key={id} className="text-gray-500">
+                              { name }
+                            </option>
+                          ))}
+                        </optgroup>
+                      )}
+                    </>
                   ))}
               </select>
             </label>
