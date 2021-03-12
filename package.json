@@ -30,5 +30,8 @@
     "swr": "^0.4.2",
     "tailwindcss": "^2.0.3",
     "use-persisted-state": "^0.3.3"
+  },
+  "devDependencies": {
+    "tailwindcss-line-clamp": "^1.0.5"
   }
 }
