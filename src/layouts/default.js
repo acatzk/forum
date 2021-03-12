@@ -6,11 +6,9 @@ export default function Layout ({ children }) {
     <div className="flex flex-col antialiased text-gray-900 h-screen">
       <Header />
       <main className="flex-1 overflow-y-auto">
-        <PerfectScrollbar>
-          <div className="container mx-auto max-w-5xl px-3">
-            { children }
-          </div>
-        </PerfectScrollbar>
+        <div className="container mx-auto max-w-5xl px-3">
+          { children }
+        </div>
       </main>
     </div>
   )

@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import Head from 'next/head'
+import Link from 'next/link'
 import Layout from '~/layouts/default'
 import { useRouter } from 'next/router'
 import ThreadList from '~/components/ThreadList'
@@ -59,6 +60,11 @@ export default function CategoryPage ({ initialData }) {
       </Head>
       <Layout>
         <h1 className="text-2xl font-semibold py-6">{ data.categories_by_pk.name }</h1>
+        {data.categories_by_pk.subCategories.map(({id, name}) => (
+          <Link key={id} href={ `/category/${id}` }>
+            { name }
+          </Link>
+        ))}
         <ThreadList threads={data.categories_by_pk.pinned} />
         <ThreadList threads={data.categories_by_pk.threads} />
       </Layout>

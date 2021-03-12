@@ -12,9 +12,13 @@ export const GET_USER_BY_EMAIL_QUERY = gql`
 
 export const GET_CATEGORY_QUERY = gql`
   query GetCategory {
-    categories {
+    categories(where: {category_id: {_is_null: true}}) {
       id
       name
+      subCategories {
+        id
+        name
+      }
     }
   }
 `
@@ -119,6 +123,10 @@ export const GET_CATEGORY_BY_ID = gql`
     categories_by_pk(id: $id) {
       id
       name
+      subCategories {
+        id
+        name
+      }
       pinned: threads(where: {pinned: {_eq: true}}, order_by: {posts_aggregate: {max: {created_at: desc}}}) {
         ...Thread
       }
