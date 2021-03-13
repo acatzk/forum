@@ -59,7 +59,7 @@ export default function Thread ({ id, title, category, posts, posts_aggregate, p
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-3">
                 {pinned && (
-                  <div className="flex items-center space-x-1 px-2 py-1.5 rounded-full text-yellow-700 bg-yellow-100">
+                  <div className="flex items-center space-x-1 px-2 py-1.5 rounded-full text-yellow-600 group-hover:bg-yellow-100">
                     <svg className="fill-current w-3 h-3" viewBox="0 0 24 24">
                       <path fill="none" d="M0 0h24v24H0z"/>
                       <path d="M22.314 10.172l-1.415 1.414-.707-.707-4.242 4.242-.707 3.536-1.415 1.414-4.242-4.243-4.95 4.95-1.414-1.414 4.95-4.95-4.243-4.242 1.414-1.415L8.88 8.05l4.242-4.242-.707-.707 1.414-1.415z"/>
@@ -68,7 +68,7 @@ export default function Thread ({ id, title, category, posts, posts_aggregate, p
                   </div>
                 )}
                 {locked && (
-                  <div className="flex items-center space-x-1 px-2 py-1.5 rounded-full text-red-700 bg-red-100">
+                  <div className="flex items-center space-x-1 px-2 py-1.5 rounded-full text-red-600 group-hover:bg-red-100">
                     <svg className="fill-current w-3 h-3" viewBox="0 0 24 24">
                       <path fill="none" d="M0 0h24v24H0z" />
                       <path
