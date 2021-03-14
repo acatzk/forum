@@ -2,18 +2,13 @@ import ActiveLink from './ActiveLink'
 import { useAuthState, useAuthDispatch } from '~/context/auth'
 
 export default function Header () {
-  const { isAuthenticated } = useAuthState()
+  const { isAuthenticated, user } = useAuthState()
   const { logout } = useAuthDispatch()
 
   const links = [
     {
       text: 'Home',
       href: '/',
-      isCurrent: true
-    },
-    {
-      text: 'Profile',
-      href: '/edit-profile',
       isCurrent: true
     },
     {
@@ -44,6 +39,8 @@ export default function Header () {
                 ))}
               </div>
               <div className="flex items-center space-x-2">
+                <Link text="Members" href="/members" />
+                <Link text={user.name} href="/edit-profile" />
                 <Link text="Post new thread" href="/new" />
                 <div>
                   <button onClick={logout} className="font-medium hover:text-indigo-200 transition ease-in-out duration-200 px-2 py-1">Logout</button>
