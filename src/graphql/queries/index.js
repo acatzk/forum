@@ -238,3 +238,14 @@ export const GET_UNANSWERED_POST_QUERY = gql`
     }
   }
 `
+
+export const GET_USERS_QUERY = gql`
+  query getUserQuery {
+    users(order_by: {created_at: asc}) {
+      id
+      name
+      created_at
+      last_seen
+    }
+  }
+`

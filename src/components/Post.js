@@ -43,9 +43,8 @@ export default function Post ({ id, message, created_at, updated_at, author, lik
               <a className="hover:underline hover:text-indigo-600 transition ease-in-out duration-200 text-gray-600 font-bold text-base">{ author.name }</a>
             </Link>
             <div className="space-x-1 font-medium">
-              <span className="text-xs text-gray-500">Posted { formattedCreatedAt }</span>
-              { updated && (<span>&middot;</span>) }
-              { updated && (<span className="text-xs text-gray-500">Updated { formattedUpdatedAt }</span>) }
+              { !updated && (<span className="text-xs text-gray-400">Posted { formattedCreatedAt }</span>) }
+              { updated && (<span className="text-xs text-gray-400">Edited { formattedUpdatedAt }</span>) }
             </div>
           </div>
           {isAuthor && 
