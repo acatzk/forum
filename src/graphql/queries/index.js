@@ -66,6 +66,10 @@ export const GET_THREAD_BY_ID = gql`
       locked
       answered
       pinned
+      category {
+        id
+        name
+      }
       author {
         id
       }
