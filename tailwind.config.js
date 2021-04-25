@@ -2,8 +2,8 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   purge: [
-    './src/pages/**/*.{js,ts,jsx,tsx}', 
-    './src/components/**/*.{js,ts,jsx,tsx}'
+    './public/**/*.html',
+    './src/**/*.{js,jsx,ts,tsx,vue}',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -18,6 +18,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
-    require('tailwindcss-line-clamp')
+    require('tailwindcss-line-clamp'),
+    require('@tailwindcss/typography')
   ],
 }

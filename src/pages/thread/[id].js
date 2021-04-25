@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import Link from 'next/link'
 import Head from 'next/head'
 import Layout from '~/layouts/default'
 import { useRouter } from 'next/router'
@@ -196,7 +197,7 @@ export default function ThreadPage ({ initialData }) {
       </Head>
       <Layout>
         <div className="flex flex-col">
-          <div className="flex items-center">
+          <div className="flex flex-col">
             <h1 className="text-3xl pt-8 pb-3 font-semibold text-indigo-700">
               { data.threads_by_pk.title }
               <div className="flex items-center space-x-3 py-2">
@@ -223,6 +224,7 @@ export default function ThreadPage ({ initialData }) {
                     </div> }
               </div>
             </h1>
+            <p className="text-gray-500 py-3">Posted in <Link href={ `/category/${data.threads_by_pk.category.id}` }><a className="font-semibold hover:underline hover:text-indigo-500">{data.threads_by_pk.category.name}</a></Link></p>
           </div>
           {isAuthor && (
             <div className="flex items-center space-x-2">

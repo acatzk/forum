@@ -67,11 +67,15 @@ export default function Post ({ id, message, created_at, updated_at, author, lik
         </div>
         <div className="text-base py-3 text-gray-600">
           { editing ?
-           (<PostForm 
+           <PostForm 
               defaultValues={{ message }} 
               onSubmit={saveAndUpdate}
-              />) : 
-           (<Markdown source={ message }/>) }
+            /> : 
+            (
+              <div className="prose-2xl mx-auto">
+                <Markdown source={ message } />
+              </div>
+            ) }
         </div>
         <Reactions 
           post_id={id} 
